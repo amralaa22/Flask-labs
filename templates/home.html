@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Blog Posts</h1>
+<hr>
+{% for post in posts %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.body }}</p>
+        {% if post.image %}
+        <img src="{{ url_for('static', filename='uploads/' + post.image) }}" class="img-thumbnail" alt="Post Image">
+        {% endif %}
+        <p class="card-text"><small class="text-muted">Created at {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                }}</small></p>
+        <a href="{{ url_for('get_post', id=post.id) }}" class="btn btn-primary">Read More</a>
+        <a href="{{url_for('edit_post', id=post.id) }}" class="btn btn-primary">edit post</a>
+        <a href="{{url_for('delete_post', id=post['id']) }}" class="btn btn-danger">delete post</a>
+    </div>
+</div>
+{% endfor %}
+<a href="{{ url_for('new_post') }}" class="btn btn-primary">Create New Post</a>
+{% endblock%}
